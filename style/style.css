@@ -235,6 +235,40 @@ body {
     font-size: 1.4rem;
   }
 
+/* ===== Greeting Sequential Animation ===== */
+
+.two {
+  font-size: 1.6rem;
+  font-weight: 300;
+  margin-top: 1rem;
+  position: relative;
+  height: 60px; /* مهم عشان مايحصلش اهتزاز في الصفحة */
+}
+
+.line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  transform: translateY(15px);
+  font-size: 1.6rem;
+  transition: all 0.3s ease;
+}
+
+/* ألوان كل سطر */
+.line:nth-child(1) { color: #ff4d4d; }
+.line:nth-child(2) { color: #ff9933; }
+.line:nth-child(3) { color: #33cc33; }
+.line:nth-child(4) { color: #3399ff; }
+.line:nth-child(5) { color: #9933ff; }
+.line:nth-child(6) { 
+  color: #ff33cc; 
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+  
+
   .nine p {
     font-size: 1.5rem;
   }
