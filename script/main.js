@@ -14,7 +14,7 @@ const animationTimeline = () => {
   // Split wish text into spans
   hbd.innerHTML = `<span>${hbd.innerHTML
     .split("")
-    .join("</span><span>")}</span>`;
+    .join("</span><span>")}</span`;
 
   const ideaTextTrans = {
     opacity: 0,
