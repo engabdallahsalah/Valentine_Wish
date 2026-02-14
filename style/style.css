@@ -2,6 +2,12 @@ html {
   box-sizing: border-box;
 }
 
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
 body {
   margin: 0;
   font-family: "Work Sans", sans-serif;
@@ -9,7 +15,7 @@ body {
 
 .container {
   height: 100vh;
-  width: 100vh;
+  width: 100vw;
   margin: 0 auto;
   text-align: center;
   visibility: hidden;
@@ -48,36 +54,40 @@ body {
   height: auto;
 }
 
-/* ===== Greeting Section Modified ===== */
+/* ========================= */
+/* Greeting Sequential Fix  */
+/* ========================= */
 
 .two {
-  font-size: 1.4rem;
-  font-weight: lighter;
+  font-size: 1.6rem;
+  font-weight: 300;
   margin-top: 1rem;
+  position: relative;
+  height: 60px; /* يمنع اهتزاز الصفحة */
 }
 
-/* كل سطر لوحده */
-.line1,
-.line2,
-.line3,
-.line4,
-.line5,
-.line6 {
-  display: block;
-  margin-bottom: 0.6rem;
-  opacity: 0; /* مهم عشان GSAP يظهرهم */
-  transform: translateY(10px); /* حركة خفيفة */
+/* كل الجمل مخفية في البداية */
+.line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  transform: translateY(15px);
 }
 
-/* ألوان مختلفة */
-.line1 { color: #ff4d4d; }
-.line2 { color: #ff9933; }
-.line3 { color: #33cc33; }
-.line4 { color: #3399ff; }
-.line5 { color: #9933ff; }
-.line6 { color: #ff33cc; font-weight: bold; }
+/* ألوان مختلفة لكل سطر */
+.line:nth-child(1) { color: #ff4d4d; }
+.line:nth-child(2) { color: #ff9933; }
+.line:nth-child(3) { color: #33cc33; }
+.line:nth-child(4) { color: #3399ff; }
+.line:nth-child(5) { color: #9933ff; }
+.line:nth-child(6) { 
+  color: #ff33cc; 
+  font-weight: bold;
+  font-size: 1.8rem;
+}
 
-/* ===================================== */
+/* ========================= */
 
 .three {
   font-size: 3rem;
@@ -213,8 +223,12 @@ body {
   cursor: pointer;
 }
 
+/* ========================= */
 /* Responsive */
+/* ========================= */
+
 @media screen and (max-width: 500px) {
+
   .container {
     width: 90%;
   }
@@ -234,40 +248,6 @@ body {
   .wish h5 {
     font-size: 1.4rem;
   }
-
-/* ===== Greeting Sequential Animation ===== */
-
-.two {
-  font-size: 1.6rem;
-  font-weight: 300;
-  margin-top: 1rem;
-  position: relative;
-  height: 60px; /* مهم عشان مايحصلش اهتزاز في الصفحة */
-}
-
-.line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  opacity: 0;
-  transform: translateY(15px);
-  font-size: 1.6rem;
-  transition: all 0.3s ease;
-}
-
-/* ألوان كل سطر */
-.line:nth-child(1) { color: #ff4d4d; }
-.line:nth-child(2) { color: #ff9933; }
-.line:nth-child(3) { color: #33cc33; }
-.line:nth-child(4) { color: #3399ff; }
-.line:nth-child(5) { color: #9933ff; }
-.line:nth-child(6) { 
-  color: #ff33cc; 
-  font-weight: bold;
-  font-size: 1.8rem;
-}
-
-  
 
   .nine p {
     font-size: 1.5rem;
