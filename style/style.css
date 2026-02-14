@@ -39,8 +39,9 @@ body {
 /* Extra messages */
 .extra-messages p {
   opacity: 0;
-  font-size: 1.2rem;
+  font-size: 1.2rem; /* زي .two */
   margin: 5px 0;
+  transition: opacity 0.3s;
 }
 
 /* Stage 2 */
