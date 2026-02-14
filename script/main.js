@@ -1,168 +1,157 @@
 // ===============================
-// Animation Timeline
+// PROFESSIONAL ANIMATION CONTROLLER
 // ===============================
 
 const animationTimeline = () => {
-  const textBoxChars = document.getElementsByClassName("hbd-chatbox")[0];
-  const hbd = document.getElementsByClassName("wish-hbd")[0];
+  const textBox = document.querySelector(".hbd-chatbox");
+  const hbd = document.querySelector(".wish-hbd");
 
-  // Split chatbox text into spans
-  textBoxChars.innerHTML = `<span>${textBoxChars.innerHTML
-    .split("")
-    .join("</span><span>")}</span>`;
+  // Split text for typing effect
+  if (textBox) {
+    textBox.innerHTML =
+      "<span>" +
+      textBox.innerHTML.split("").join("</span><span>") +
+      "</span>";
+  }
 
-  // Split wish text into spans
-  hbd.innerHTML = `<span>${hbd.innerHTML
-    .split("")
-    .join("</span><span>")}</span`;
+  if (hbd) {
+    hbd.innerHTML =
+      "<span>" +
+      hbd.innerHTML.split("").join("</span><span>") +
+      "</span>";
+  }
 
-  const ideaTextTrans = {
+  const ideaEnter = {
     opacity: 0,
     y: -20,
     rotationX: 5,
-    skewX: "15deg",
+    skewX: "10deg"
   };
 
-  const ideaTextTransLeave = {
+  const ideaLeave = {
     opacity: 0,
     y: 20,
     rotationY: 5,
-    skewX: "-15deg",
+    skewX: "-10deg"
   };
 
-  const tl = new TimelineMax();
+  const tl = new TimelineMax({ paused: true });
 
-  tl.to(".container", 0.1, { visibility: "visible" })
+  tl.set(".container", { visibility: "visible" });
 
-   // ===============================
-// First Section
-// ===============================
+  // ==========================================
+  // SECTION 1 — INTRO LINES SEQUENTIAL
+  // ==========================================
 
-.from(".one", 0.8, { opacity: 0, y: 20 })
+  tl.from(".one", 0.8, { opacity: 0, y: 20 })
+    .set(".line", { opacity: 0, y: 15 });
 
-// نخفي كل الجمل الأول
-.set(".line", { opacity: 0, y: 15 })
+  const lines = document.querySelectorAll(".line");
 
-// تشغيل الجمل واحدة واحدة بتسلسل حقيقي
-.to(".line:nth-child(1)", 0.8, { opacity: 1, y: 0 })
-.to(".line:nth-child(1)", 0.8, { opacity: 0 }, "+=2")
+  lines.forEach((line, index) => {
+    tl.to(line, 0.8, { opacity: 1, y: 0 });
 
-.to(".line:nth-child(2)", 0.8, { opacity: 1, y: 0 })
-.to(".line:nth-child(2)", 0.8, { opacity: 0 }, "+=2")
+    if (index === lines.length - 1) {
+      tl.to(line, 0.8, { opacity: 0 }, "+=3");
+    } else {
+      tl.to(line, 0.8, { opacity: 0 }, "+=2");
+    }
+  });
 
-.to(".line:nth-child(3)", 0.8, { opacity: 1, y: 0 })
-.to(".line:nth-child(3)", 0.8, { opacity: 0 }, "+=2")
+  tl.to(".one", 0.6, { opacity: 0, y: 20 });
 
-.to(".line:nth-child(4)", 0.8, { opacity: 1, y: 0 })
-.to(".line:nth-child(4)", 0.8, { opacity: 0 }, "+=2")
+  // ==========================================
+  // SECTION 2 — VALENTINE SCREEN
+  // ==========================================
 
-.to(".line:nth-child(5)", 0.8, { opacity: 1, y: 0 })
-.to(".line:nth-child(5)", 0.8, { opacity: 0 }, "+=2")
+  tl.from(".three", 0.8, { opacity: 0, scale: 0.9 })
+    .to(".three", 0.8, { opacity: 0, y: 20 }, "+=2");
 
-// YOU🥺 تفضل شوية أطول
-.to(".line:nth-child(6)", 0.8, { opacity: 1, y: 0 })
-.to(".line:nth-child(6)", 0.8, { opacity: 0 }, "+=3")
+  // ==========================================
+  // SECTION 3 — MESSAGE BOX
+  // ==========================================
 
-// بعدها نخفي السيكشن كله
-.to(".one", 0.7, { opacity: 0, y: 20 })
+  tl.from(".four", 0.7, { scale: 0.5, opacity: 0 })
+    .from(".fake-btn", 0.4, { scale: 0.5, opacity: 0 })
+    .staggerTo(".hbd-chatbox span", 0.04, { opacity: 1 }, 0.02)
+    .to(".fake-btn", 0.2, { backgroundColor: "rgb(127, 206, 248)" })
+    .to(".four", 0.6, { scale: 0.2, opacity: 0, y: -150 }, "+=1");
 
+  // ==========================================
+  // SECTION 4 — IDEAS
+  // ==========================================
 
-    // ===============================
-    // Continue Original Animation
-    // ===============================
+  tl.from(".idea-1", 0.7, ideaEnter)
+    .to(".idea-1", 0.7, ideaLeave, "+=1.5")
 
-    .from(".three", 0.7, { opacity: 0, y: 20 })
-    .to(".three", 0.7, { opacity: 0, y: 20 }, "+=2")
+    .from(".idea-2", 0.7, ideaEnter)
+    .to(".idea-2", 0.7, ideaLeave, "+=1.5")
 
-    .from(".four", 0.7, { scale: 0.2, opacity: 0 })
-    .from(".fake-btn", 0.3, { scale: 0.2, opacity: 0 })
+    .from(".idea-3", 0.7, ideaEnter)
+    .to(".idea-3", 0.7, ideaLeave, "+=1.5")
 
-    .staggerTo(
-      ".hbd-chatbox span",
-      0.04,
-      { visibility: "visible" },
-      0.02
-    )
+    .from(".idea-4", 0.7, ideaEnter)
+    .to(".idea-4", 0.7, ideaLeave, "+=1.5")
 
-    .to(".fake-btn", 0.1, {
-      backgroundColor: "rgb(127, 206, 248)",
-    })
+    .from(".idea-5", 0.7, ideaEnter)
+    .to(".idea-5", 0.7, ideaLeave, "+=1.5")
 
-    .to(".four", 0.5, {
-      scale: 0.2,
-      opacity: 0,
-      y: -150,
-    }, "+=0.7")
+    .from(".idea-6", 0.7, ideaEnter);
 
-    .from(".idea-1", 0.7, ideaTextTrans)
-    .to(".idea-1", 0.7, ideaTextTransLeave, "+=1.5")
+  // ==========================================
+  // SECTION 5 — FINAL WISH
+  // ==========================================
 
-    .from(".idea-2", 0.7, ideaTextTrans)
-    .to(".idea-2", 0.7, ideaTextTransLeave, "+=1.5")
-
-    .from(".idea-3", 0.7, ideaTextTrans)
-    .to(".idea-3", 0.7, ideaTextTransLeave, "+=1.5")
-
-    .from(".idea-4", 0.7, ideaTextTrans)
-    .to(".idea-4", 0.7, ideaTextTransLeave, "+=1.5")
-
-    .from(".idea-5", 0.7, ideaTextTrans)
-    .to(".idea-5", 0.7, ideaTextTransLeave, "+=1.5")
-
-    .from(".idea-6", 0.7, ideaTextTrans)
-
-    .from(".six", 0.8, { opacity: 0, y: 30 })
+  tl.from(".six", 0.8, { opacity: 0, y: 30 })
     .from(".wish-hbd span", 0.04, { opacity: 0 }, 0.02)
     .from("#wishText", 0.7, { opacity: 0, y: 10 })
 
     .from(".baloons img", 1.5, {
       opacity: 0,
       y: 1400,
-      stagger: 0.2,
+      stagger: 0.2
     })
 
-    .from(".nine p", 1, ideaTextTrans)
+    .from(".nine p", 1, ideaEnter)
     .to(".last-smile", 0.5, { rotation: 90 }, "+=1");
 
-  // Replay Button
-  const replyBtn = document.getElementById("replay");
-  replyBtn.addEventListener("click", () => {
-    tl.restart();
-  });
+  tl.play();
+
+  // Replay
+  const replayBtn = document.getElementById("replay");
+  if (replayBtn) {
+    replayBtn.addEventListener("click", () => tl.restart());
+  }
 };
 
+// ==========================================
+// FETCH CUSTOMIZATION
+// ==========================================
 
-// ===============================
-// Fetch Customization
-// ===============================
+const fetchData = async () => {
+  try {
+    const response = await fetch("customize.json");
+    const data = await response.json();
 
-const fetchData = () => {
-  fetch("customize.json")
-    .then((data) => data.json())
-    .then((data) => {
-      Object.keys(data).forEach((customData) => {
-        if (data[customData] !== "") {
-          if (customData === "imagePath") {
-            document
-              .getElementById(customData)
-              .setAttribute("src", data[customData]);
-          } else {
-            document.getElementById(customData).innerText =
-              data[customData];
-          }
+    Object.keys(data).forEach((key) => {
+      if (data[key] !== "") {
+        if (key === "imagePath") {
+          document.getElementById(key)?.setAttribute("src", data[key]);
+        } else {
+          document.getElementById(key).innerText = data[key];
         }
-      });
+      }
     });
+  } catch (err) {
+    console.error("Customization load failed:", err);
+  }
 };
 
-const resolveFetch = () => {
-  return new Promise((resolve) => {
-    fetchData();
-    resolve("Fetch done!");
-  });
-};
+// ==========================================
+// INIT
+// ==========================================
 
-// Start Everything
-resolveFetch().then(() => {
+window.addEventListener("DOMContentLoaded", async () => {
+  await fetchData();
   animationTimeline();
 });
