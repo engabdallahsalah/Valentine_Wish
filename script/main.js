@@ -1,46 +1,41 @@
 // ===============================
-// Animation Timeline
+// Animation Timeline - CLEAN FINAL
 // ===============================
 
 const animationTimeline = () => {
-  const textBoxChars = document.querySelector(".hbd-chatbox");
-  const wishText = document.querySelector(".wish-hbd");
 
-  // Convert text to spans for typing effect
-  textBoxChars.innerHTML = textBoxChars.textContent
-    .split("")
-    .map((char) => `<span>${char}</span>`)
-    .join("");
+  const textBox = document.querySelector(".hbd-chatbox");
+  const hbd = document.querySelector(".wish-hbd");
+  const lines = document.querySelectorAll(".line");
 
-  wishText.innerHTML = wishText.textContent
-    .split("")
-    .map((char) => `<span>${char}</span>`)
-    .join("");
+  // Split chatbox text into spans
+  textBox.innerHTML =
+    "<span>" + textBox.innerHTML.split("").join("</span><span>") + "</span>";
 
-  const ideaTextTrans = {
-    opacity: 0,
-    y: -20,
-    rotationX: 5,
-    skewX: "15deg",
-  };
-
-  const ideaTextTransLeave = {
-    opacity: 0,
-    y: 20,
-    rotationY: 5,
-    skewX: "-15deg",
-  };
+  // Split wish heading into spans
+  hbd.innerHTML =
+    "<span>" + hbd.innerHTML.split("").join("</span><span>") + "</span>";
 
   const tl = new TimelineMax();
 
-  tl.set(".container", { visibility: "visible" })
+  // Hide all main sections except first
+  tl.set([
+    ".three",
+    ".four",
+    ".five",
+    ".six",
+    ".seven",
+    ".eight",
+    ".nine"
+  ], { opacity: 0 });
 
-    // ===== Step 1: Hey Larissa =====
-    .from(".one", 0.7, { opacity: 0, y: 20 })
-    .to(".one", 0.7, { opacity: 0, y: 20 }, "+=1.5")
+  tl.to(".container", 0.1, { visibility: "visible" });
 
-    // ===== Step 2: Sequential Lines =====
-    tl.from(".one", 1, { opacity: 0, y: 30 });
+  // ===============================
+  // 1️⃣ HEY SECTION
+  // ===============================
+
+  tl.from(".one", 1, { opacity: 0, y: 30 });
 
   // Hide lines first
   tl.set(lines, { opacity: 0, y: 20 });
@@ -54,74 +49,89 @@ const animationTimeline = () => {
   // Hide whole first block
   tl.to(".one", 0.8, { opacity: 0, y: -30 });
 
+  // ===============================
+  // 2️⃣ VALENTINE PAGE
+  // ===============================
 
-    // ===== Step 3: It's Valentine =====
-    .from(".three", 0.7, { opacity: 0, y: 20 })
-    .to(".three", 0.7, { opacity: 0, y: 20 }, "+=1.5")
+  tl.to(".three", 0.8, { opacity: 1 });
+  tl.to(".three", 0.8, { opacity: 0 }, "+=2");
 
-    // ===== Step 4: Chatbox typing effect =====
-    .from(".four", 0.7, { scale: 0.2, opacity: 0 })
-    .from(".fake-btn", 0.3, { scale: 0.2, opacity: 0 })
-    .staggerTo(".hbd-chatbox span", 0.05, { visibility: "visible" }, 0.02)
-    .to(".fake-btn", 0.1, { backgroundColor: "rgb(127, 206, 248)" })
-    .to(".four", 0.5, { scale: 0.2, opacity: 0, y: -150 }, "+=1")
+  // ===============================
+  // 3️⃣ MESSAGE BOX
+  // ===============================
 
-    // ===== Step 5: Idea Section =====
-    .from(".idea-1", 0.7, ideaTextTrans)
-    .to(".idea-1", 0.7, ideaTextTransLeave, "+=1.5")
-    .from(".idea-2", 0.7, ideaTextTrans)
-    .to(".idea-2", 0.7, ideaTextTransLeave, "+=1.5")
-    .from(".idea-3", 0.7, ideaTextTrans)
-    .to(".idea-3 strong", 0.5, {
-      scale: 1.2,
-      x: 10,
-      backgroundColor: "rgb(21, 161, 237)",
-      color: "#fff",
-    })
-    .to(".idea-3", 0.7, ideaTextTransLeave, "+=1.5")
-    .from(".idea-4", 0.7, ideaTextTrans)
-    .to(".idea-4", 0.7, ideaTextTransLeave, "+=1.5")
-    .from(".idea-5", 0.7, {
-      rotationX: 15,
-      rotationZ: -10,
-      skewY: "-5deg",
-      y: 50,
-      z: 10,
-      opacity: 0,
-    }, "+=0.5")
-    .to(".idea-5 span", 0.7, { rotation: 90, x: 8 }, "+=0.4")
-    .to(".idea-5", 0.7, { scale: 0.2, opacity: 0 }, "+=2")
-    .staggerFrom(".idea-6 span", 0.8, { scale: 3, opacity: 0, rotation: 15, ease: Expo.easeOut }, 0.2)
-    .staggerTo(".idea-6 span", 0.8, { scale: 3, opacity: 0, rotation: -15, ease: Expo.easeOut }, 0.2, "+=1")
+  tl.to(".four", 0.8, { opacity: 1 });
+  tl.from(".fake-btn", 0.4, { scale: 0.5, opacity: 0 });
 
-    // ===== Step 6: Balloons =====
-    .staggerFromTo(".baloons img", 2.5, { opacity: 0.9, y: 1400 }, { opacity: 1, y: -1000 }, 0.2)
+  tl.staggerTo(
+    ".hbd-chatbox span",
+    0.04,
+    { visibility: "visible" },
+    0.02
+  );
 
-    // ===== Step 7: Image + Hat =====
-    .from(".girl-dp", 0.5, { scale: 3.5, opacity: 0, x: 25, y: -25, rotationZ: -45 }, "-=2")
-    .from(".hat", 0.5, { x: -100, y: 350, rotation: -180, opacity: 0 })
+  tl.to(".fake-btn", 0.2, {
+    backgroundColor: "rgb(127, 206, 248)"
+  });
 
-    // ===== Step 8: Wish message =====
-    .staggerFrom(".wish-hbd span", 0.7, { opacity: 0, y: -50, rotation: 150, skewX: "30deg", ease: Elastic.easeOut.config(1, 0.5) }, 0.1)
-    .staggerFromTo(".wish-hbd span", 0.7, { scale: 1.4, rotationY: 150 }, { scale: 1, rotationY: 0, color: "#ff69b4", ease: Expo.easeOut }, 0.1, "party")
-    .from(".wish h5", 0.5, { opacity: 0, y: 10, skewX: "-15deg" }, "party")
+  tl.to(".four", 0.8, { opacity: 0, y: -150 }, "+=1");
 
-    // ===== Step 9: SVG Hearts =====
-    .staggerTo(".eight svg", 1.5, { visibility: "visible", opacity: 0, scale: 80, repeat: 3, repeatDelay: 1.4 }, 0.3)
+  // ===============================
+  // 4️⃣ IDEA SECTION
+  // ===============================
 
-    // ===== Step 10: Hide Six Section =====
-    .to(".six", 0.5, { opacity: 0, y: 30, zIndex: "-1" })
+  tl.to(".five", 0.8, { opacity: 1 });
 
-    // ===== Step 11: Final Text =====
-    .staggerFrom(".nine p", 1, ideaTextTrans, 1.2)
-    .to(".last-smile", 0.5, { rotation: 90 }, "+=1");
+  tl.from(".idea-1", 0.8, { opacity: 0, y: 20 });
+  tl.to(".idea-1", 0.8, { opacity: 0 }, "+=1.5");
+
+  tl.from(".idea-2", 0.8, { opacity: 0, y: 20 });
+  tl.to(".idea-2", 0.8, { opacity: 0 }, "+=1.5");
+
+  tl.from(".idea-3", 0.8, { opacity: 0, y: 20 });
+  tl.to(".idea-3", 0.8, { opacity: 0 }, "+=1.5");
+
+  tl.from(".idea-4", 0.8, { opacity: 0, y: 20 });
+  tl.to(".idea-4", 0.8, { opacity: 0 }, "+=1.5");
+
+  tl.from(".idea-5", 0.8, { opacity: 0, y: 20 });
+  tl.to(".idea-5", 0.8, { opacity: 0 }, "+=1.5");
+
+  tl.from(".idea-6", 0.8, { opacity: 0, y: 20 });
+  tl.to(".five", 0.8, { opacity: 0 }, "+=1");
+
+  // ===============================
+  // 5️⃣ IMAGE + WISH
+  // ===============================
+
+  tl.to(".six", 1, { opacity: 1, y: 0 });
+
+  tl.staggerFrom(".wish-hbd span", 0.05, { opacity: 0 }, 0.03);
+  tl.from("#wishText", 1, { opacity: 0, y: 20 });
+
+  tl.to(".seven", 0.5, { opacity: 1 });
+
+  tl.from(".baloons img", 1.5, {
+    opacity: 0,
+    y: 1000,
+    stagger: 0.2
+  });
+
+  // ===============================
+  // 6️⃣ FINAL PAGE
+  // ===============================
+
+  tl.to(".nine", 1, { opacity: 1 });
+  tl.to(".last-smile", 0.6, { rotation: 90 }, "+=1");
 
   // Replay
-  const replyBtn = document.getElementById("replay");
-  replyBtn.addEventListener("click", () => tl.restart());
+  document.getElementById("replay").addEventListener("click", () => {
+    tl.restart();
+  });
 };
 
-// Run Animation on DOMContentLoaded
+
+// Start
 document.addEventListener("DOMContentLoaded", () => {
   animationTimeline();
 });
