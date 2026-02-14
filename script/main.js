@@ -40,19 +40,20 @@ const animationTimeline = () => {
     .to(".one", 0.7, { opacity: 0, y: 20 }, "+=1.5")
 
     // ===== Step 2: Sequential Lines =====
-    .add(() => {
-      const lines = document.querySelectorAll(".line");
-      const tlLines = new TimelineMax();
+    tl.from(".one", 1, { opacity: 0, y: 30 });
 
-      lines.forEach((line, index) => {
-        const delayTime = index === lines.length - 1 ? 2 : 2; // 2 sec between each
-        tlLines
-          .to(line, 0.8, { opacity: 1, y: 0 })
-          .to(line, 0.8, { opacity: 0 }, `+=${delayTime}`);
-      });
+  // Hide lines first
+  tl.set(lines, { opacity: 0, y: 20 });
 
-      return tlLines;
-    })
+  // Show each line manually (no nth-child)
+  lines.forEach((line, index) => {
+    tl.to(line, 0.8, { opacity: 1, y: 0 });
+    tl.to(line, 0.8, { opacity: 0 }, "+=2");
+  });
+
+  // Hide whole first block
+  tl.to(".one", 0.8, { opacity: 0, y: -30 });
+
 
     // ===== Step 3: It's Valentine =====
     .from(".three", 0.7, { opacity: 0, y: 20 })
