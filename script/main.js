@@ -1,137 +1,72 @@
-// ===============================
-// Animation Timeline - CLEAN FINAL
-// ===============================
+// =====================
+// Animation Timeline
+// =====================
 
 const animationTimeline = () => {
-
+  // Split text for stagger animation
   const textBox = document.querySelector(".hbd-chatbox");
-  const hbd = document.querySelector(".wish-hbd");
-  const lines = document.querySelectorAll(".line");
+  textBox.innerHTML = textBox.textContent
+    .split("")
+    .map((char) => `<span>${char}</span>`)
+    .join("");
 
-  // Split chatbox text into spans
-  textBox.innerHTML =
-    "<span>" + textBox.innerHTML.split("").join("</span><span>") + "</span>";
-
-  // Split wish heading into spans
-  hbd.innerHTML =
-    "<span>" + hbd.innerHTML.split("").join("</span><span>") + "</span>";
+  const wishText = document.querySelector(".wish-hbd");
+  wishText.innerHTML = wishText.textContent
+    .split("")
+    .map((char) => `<span>${char}</span>`)
+    .join("");
 
   const tl = new TimelineMax();
 
-  // Hide all main sections except first
-  tl.set([
-    ".three",
-    ".four",
-    ".five",
-    ".six",
-    ".seven",
-    ".eight",
-    ".nine"
-  ], { opacity: 0 });
+  // ===================== Sequence =====================
+  tl.to(".container", 0.1, { visibility: "visible" })
 
-  tl.to(".container", 0.1, { visibility: "visible" });
+    // 1. Show Hey + Name
+    .from(".one", 0.7, { opacity: 0, y: 10 })
+    
+    // 2. Show each line one by one
+    .staggerFrom(".line", 0.5, { opacity: 0, y: 15 }, 0.8)
+    .staggerTo(".line", 0.5, { opacity: 0, y: -15 }, 0.5, "+=1.5")
 
-  // ===============================
-  // 1️⃣ HEY SECTION
-  // ===============================
+    // 3. Show Valentine Title
+    .from(".three", 0.7, { opacity: 0, y: 10 })
+    .to(".three", 0.7, { opacity: 0, y: 10 }, "+=1.5")
 
-  tl.from(".one", 1, { opacity: 0, y: 30 });
+    // 4. Show Message Box
+    .from(".four", 0.7, { opacity: 0, scale: 0.3 })
+    .from(".fake-btn", 0.3, { opacity: 0, scale: 0.3 })
+    .staggerTo(".hbd-chatbox span", 0.05, { opacity: 1 }, 0.05)
+    .to(".fake-btn", 0.1, { backgroundColor: "rgb(127, 206, 248)" })
+    .to(".four", 0.5, { opacity: 0, scale: 0.3, y: -150 }, "+=0.7")
 
-  // Hide lines first
-  tl.set(lines, { opacity: 0, y: 20 });
+    // 5. Idea Section
+    .staggerFrom(".idea-1, .idea-2, .idea-3, .idea-4", 0.7, { opacity: 0, y: -20 }, 1.5)
+    .to(".idea-3 strong", 0.5, { scale: 1.2, x: 10, backgroundColor: "#159ee3", color: "#fff" })
+    .from(".idea-5", 0.7, { opacity: 0, rotationX: 15, rotationZ: -10, skewY: "-5deg", y: 50 })
+    .to(".idea-5 span", 0.7, { rotation: 90, x: 8 })
+    .to(".idea-5", 0.7, { opacity: 0, scale: 0.3 }, "+=2")
+    .staggerFrom(".idea-6 span", 0.8, { scale: 3, opacity: 0, rotation: 15, ease: Expo.easeOut }, 0.2)
+    .staggerTo(".idea-6 span", 0.8, { scale: 3, opacity: 0, rotation: -15, ease: Expo.easeOut }, 0.2, "+=1")
 
-  // Show each line manually (no nth-child)
-  lines.forEach((line, index) => {
-    tl.to(line, 0.8, { opacity: 1, y: 0 });
-    tl.to(line, 0.8, { opacity: 0 }, "+=2");
-  });
+    // 6. Show Image + Hat + Wish Message
+    .staggerFrom(".girl-dp, .hat", 0.5, { opacity: 0, scale: 3, x: 25, y: -25, rotationZ: -45 }, 0.2)
+    .staggerFrom(".wish-hbd span", 0.7, { opacity: 0, y: -50, rotation: 150, skewX: "30deg", ease: Elastic.easeOut.config(1,0.5) }, 0.1)
+    .staggerFromTo(".wish-hbd span", 0.7, { scale: 1.4, rotationY: 150 }, { scale: 1, rotationY: 0, color: "#ff69b4", ease: Expo.easeOut }, 0.1, "party")
+    .from(".wish h5", 0.5, { opacity: 0, y: 10, skewX: "-15deg" }, "party")
 
-  // Hide whole first block
-  tl.to(".one", 0.8, { opacity: 0, y: -30 });
+    // 7. Balloons & Confetti
+    .staggerFromTo(".baloons img", 2.5, { opacity: 0.9, y: 1400 }, { opacity: 1, y: -1000 }, 0.2)
+    .staggerTo(".eight svg", 1.5, { visibility: "visible", opacity: 0, scale: 80, repeat: 3, repeatDelay: 1.4 }, 0.3)
 
-  // ===============================
-  // 2️⃣ VALENTINE PAGE
-  // ===============================
+    // 8. Hide final section (optional) and show ending
+    .to(".six", 0.5, { opacity: 0, y: 30, zIndex: -1 }, "+=0.5")
+    .staggerFrom(".nine p", 1, { opacity: 0, y: -20 }, 1.2)
+    .to(".last-smile", 0.5, { rotation: 90 }, "+=1");
 
-  tl.to(".three", 0.8, { opacity: 1 });
-  tl.to(".three", 0.8, { opacity: 0 }, "+=2");
-
-  // ===============================
-  // 3️⃣ MESSAGE BOX
-  // ===============================
-
-  tl.to(".four", 0.8, { opacity: 1 });
-  tl.from(".fake-btn", 0.4, { scale: 0.5, opacity: 0 });
-
-  tl.staggerTo(
-    ".hbd-chatbox span",
-    0.04,
-    { visibility: "visible" },
-    0.02
-  );
-
-  tl.to(".fake-btn", 0.2, {
-    backgroundColor: "rgb(127, 206, 248)"
-  });
-
-  tl.to(".four", 0.8, { opacity: 0, y: -150 }, "+=1");
-
-  // ===============================
-  // 4️⃣ IDEA SECTION
-  // ===============================
-
-  tl.to(".five", 0.8, { opacity: 1 });
-
-  tl.from(".idea-1", 0.8, { opacity: 0, y: 20 });
-  tl.to(".idea-1", 0.8, { opacity: 0 }, "+=1.5");
-
-  tl.from(".idea-2", 0.8, { opacity: 0, y: 20 });
-  tl.to(".idea-2", 0.8, { opacity: 0 }, "+=1.5");
-
-  tl.from(".idea-3", 0.8, { opacity: 0, y: 20 });
-  tl.to(".idea-3", 0.8, { opacity: 0 }, "+=1.5");
-
-  tl.from(".idea-4", 0.8, { opacity: 0, y: 20 });
-  tl.to(".idea-4", 0.8, { opacity: 0 }, "+=1.5");
-
-  tl.from(".idea-5", 0.8, { opacity: 0, y: 20 });
-  tl.to(".idea-5", 0.8, { opacity: 0 }, "+=1.5");
-
-  tl.from(".idea-6", 0.8, { opacity: 0, y: 20 });
-  tl.to(".five", 0.8, { opacity: 0 }, "+=1");
-
-  // ===============================
-  // 5️⃣ IMAGE + WISH
-  // ===============================
-
-  tl.to(".six", 1, { opacity: 1, y: 0 });
-
-  tl.staggerFrom(".wish-hbd span", 0.05, { opacity: 0 }, 0.03);
-  tl.from("#wishText", 1, { opacity: 0, y: 20 });
-
-  tl.to(".seven", 0.5, { opacity: 1 });
-
-  tl.from(".baloons img", 1.5, {
-    opacity: 0,
-    y: 1000,
-    stagger: 0.2
-  });
-
-  // ===============================
-  // 6️⃣ FINAL PAGE
-  // ===============================
-
-  tl.to(".nine", 1, { opacity: 1 });
-  tl.to(".last-smile", 0.6, { rotation: 90 }, "+=1");
-
-  // Replay
-  document.getElementById("replay").addEventListener("click", () => {
-    tl.restart();
-  });
+  // ===================== Replay Button =====================
+  const replayBtn = document.getElementById("replay");
+  replayBtn.addEventListener("click", () => tl.restart());
 };
 
-
-// Start
-document.addEventListener("DOMContentLoaded", () => {
-  animationTimeline();
-});
+// ===================== Initialize =====================
+window.addEventListener("load", animationTimeline);
