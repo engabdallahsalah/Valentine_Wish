@@ -17,19 +17,15 @@ const animationTimeline = () => {
     .from(".two", 0.4, { opacity: 0, y: 10 }, "+=0.2")
     
     // Extra messages
-    .staggerFrom(
-      [".msg#msg1", ".msg#msg2", ".msg#msg3", ".msg#msg4"], 
-      0.7, 
-      { opacity: 0, y: 10, ease: Power2.easeOut }, 
-      0.5
-    )
-    .staggerTo(
-      [".msg#msg1", ".msg#msg2", ".msg#msg3", ".msg#msg4"],
-      0.7,
-      { opacity: 0, y: 10 },
-      0.5,
-      "+=1.5"
-    )
+   .from("#msg1", 0.5, {opacity: 0, y: 10})
+   .to("#msg1", 0.5, {opacity: 0, y: 10}, "+=1")
+   .from("#msg2", 0.5, {opacity: 0, y: 10})
+   .to("#msg2", 0.5, {opacity: 0, y: 10}, "+=1")
+   .from("#msg3", 0.5, {opacity: 0, y: 10})
+   .to("#msg3", 0.5, {opacity: 0, y: 10}, "+=1")
+   .from("#msg4", 0.5, {opacity: 0, y: 10})
+   .to("#msg4", 0.5, {opacity: 0, y: 10}, "+=1")
+
 
     // Stage 2: Valentine Announcement
     .from(".three", 0.7, { opacity: 0, y: 10 })
