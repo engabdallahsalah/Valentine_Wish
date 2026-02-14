@@ -34,38 +34,38 @@ const animationTimeline = () => {
 
   tl.to(".container", 0.1, { visibility: "visible" })
 
-    // ===============================
-    // First Section
-    // ===============================
+   // ===============================
+// First Section
+// ===============================
 
-    .from(".one", 0.8, { opacity: 0, y: 20 })
+.from(".one", 0.8, { opacity: 0, y: 20 })
 
-    // نخفي كل الجمل
-    .set(".line", { opacity: 0, y: 15 })
+// نخفي كل الجمل الأول
+.set(".line", { opacity: 0, y: 15 })
 
-    // تشغيل الجمل واحدة واحدة
-    .add(() => {
-      const lines = document.querySelectorAll(".line");
-      const tlLines = new TimelineMax();
+// تشغيل الجمل واحدة واحدة بتسلسل حقيقي
+.to(".line:nth-child(1)", 0.8, { opacity: 1, y: 0 })
+.to(".line:nth-child(1)", 0.8, { opacity: 0 }, "+=2")
 
-      lines.forEach((line, index) => {
-        if (index === lines.length - 1) {
-          // آخر جملة (YOU🥺) تفضل شوية أطول
-          tlLines
-            .to(line, 0.8, { opacity: 1, y: 0 })
-            .to(line, 0.8, { opacity: 0 }, "+=2.2");
-        } else {
-          tlLines
-            .to(line, 0.8, { opacity: 1, y: 0 })
-            .to(line, 0.8, { opacity: 0 }, "+=1.2");
-        }
-      });
+.to(".line:nth-child(2)", 0.8, { opacity: 1, y: 0 })
+.to(".line:nth-child(2)", 0.8, { opacity: 0 }, "+=2")
 
-      return tlLines;
-    })
+.to(".line:nth-child(3)", 0.8, { opacity: 1, y: 0 })
+.to(".line:nth-child(3)", 0.8, { opacity: 0 }, "+=2")
 
-    // إخفاء الهيدر بعد ما يخلصوا
-    .to(".one", 0.7, { opacity: 0, y: 20 }, "+=0.5")
+.to(".line:nth-child(4)", 0.8, { opacity: 1, y: 0 })
+.to(".line:nth-child(4)", 0.8, { opacity: 0 }, "+=2")
+
+.to(".line:nth-child(5)", 0.8, { opacity: 1, y: 0 })
+.to(".line:nth-child(5)", 0.8, { opacity: 0 }, "+=2")
+
+// YOU🥺 تفضل شوية أطول
+.to(".line:nth-child(6)", 0.8, { opacity: 1, y: 0 })
+.to(".line:nth-child(6)", 0.8, { opacity: 0 }, "+=3")
+
+// بعدها نخفي السيكشن كله
+.to(".one", 0.7, { opacity: 0, y: 20 })
+
 
     // ===============================
     // Continue Original Animation
