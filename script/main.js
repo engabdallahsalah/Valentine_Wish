@@ -1,157 +1,146 @@
 // ===============================
-// PROFESSIONAL ANIMATION CONTROLLER
+// Animation Timeline - FINAL
 // ===============================
 
 const animationTimeline = () => {
+
   const textBox = document.querySelector(".hbd-chatbox");
   const hbd = document.querySelector(".wish-hbd");
 
-  // Split text for typing effect
-  if (textBox) {
-    textBox.innerHTML =
-      "<span>" +
-      textBox.innerHTML.split("").join("</span><span>") +
-      "</span>";
-  }
+  // Split chatbox text into spans (letter animation)
+  textBox.innerHTML = "<span>" + textBox.innerHTML.split("").join("</span><span>") + "</span>";
 
-  if (hbd) {
-    hbd.innerHTML =
-      "<span>" +
-      hbd.innerHTML.split("").join("</span><span>") +
-      "</span>";
-  }
+  // Split wish heading into spans
+  hbd.innerHTML = "<span>" + hbd.innerHTML.split("").join("</span><span>") + "</span>";
 
-  const ideaEnter = {
+  const tl = new TimelineMax();
+
+  // Hide all sections at start (except first)
+  tl.set([
+    ".three",
+    ".four",
+    ".five",
+    ".six",
+    ".seven",
+    ".eight",
+    ".nine"
+  ], { opacity: 0 });
+
+  // Make container visible
+  tl.to(".container", 0.1, { visibility: "visible" })
+
+  // ===============================
+  // 1️⃣ HEY LARISSA SECTION
+  // ===============================
+
+  .from(".one", 1, { opacity: 0, y: 30 })
+
+  // Hide greeting lines
+  .set(".line", { opacity: 0, y: 20 })
+
+  // Sequential sentences (2 sec between each)
+  .to(".line:nth-child(1)", 0.8, { opacity: 1, y: 0 })
+  .to(".line:nth-child(1)", 0.8, { opacity: 0 }, "+=2")
+
+  .to(".line:nth-child(2)", 0.8, { opacity: 1, y: 0 })
+  .to(".line:nth-child(2)", 0.8, { opacity: 0 }, "+=2")
+
+  .to(".line:nth-child(3)", 0.8, { opacity: 1, y: 0 })
+  .to(".line:nth-child(3)", 0.8, { opacity: 0 }, "+=2")
+
+  .to(".line:nth-child(4)", 0.8, { opacity: 1, y: 0 })
+  .to(".line:nth-child(4)", 0.8, { opacity: 0 }, "+=2")
+
+  .to(".line:nth-child(5)", 0.8, { opacity: 1, y: 0 })
+  .to(".line:nth-child(5)", 0.8, { opacity: 0 }, "+=2")
+
+  .to(".line:nth-child(6)", 0.8, { opacity: 1, y: 0 })
+  .to(".line:nth-child(6)", 0.8, { opacity: 0 }, "+=3)
+
+  // Hide first section completely
+  .to(".one", 0.8, { opacity: 0, y: -30 })
+
+  // ===============================
+  // 2️⃣ IT'S VALENTINE SECTION
+  // ===============================
+
+  .to(".three", 0.8, { opacity: 1 })
+  .to(".three", 0.8, { opacity: 0 }, "+=2")
+
+  // ===============================
+  // 3️⃣ MESSAGE BOX
+  // ===============================
+
+  .to(".four", 0.8, { opacity: 1, scale: 1 })
+  .from(".fake-btn", 0.4, { scale: 0.5, opacity: 0 })
+
+  .staggerTo(".hbd-chatbox span", 0.04, { visibility: "visible" }, 0.02)
+
+  .to(".fake-btn", 0.2, {
+    backgroundColor: "rgb(127, 206, 248)"
+  })
+
+  .to(".four", 0.8, { opacity: 0, y: -150 }, "+=1")
+
+  // ===============================
+  // 4️⃣ IDEA SECTION
+  // ===============================
+
+  .to(".five", 0.8, { opacity: 1 })
+
+  .from(".idea-1", 0.8, { opacity: 0, y: 20 })
+  .to(".idea-1", 0.8, { opacity: 0 }, "+=1.5")
+
+  .from(".idea-2", 0.8, { opacity: 0, y: 20 })
+  .to(".idea-2", 0.8, { opacity: 0 }, "+=1.5")
+
+  .from(".idea-3", 0.8, { opacity: 0, y: 20 })
+  .to(".idea-3", 0.8, { opacity: 0 }, "+=1.5")
+
+  .from(".idea-4", 0.8, { opacity: 0, y: 20 })
+  .to(".idea-4", 0.8, { opacity: 0 }, "+=1.5")
+
+  .from(".idea-5", 0.8, { opacity: 0, y: 20 })
+  .to(".idea-5", 0.8, { opacity: 0 }, "+=1.5")
+
+  .from(".idea-6", 0.8, { opacity: 0, y: 20 })
+  .to(".five", 0.8, { opacity: 0 }, "+=1")
+
+  // ===============================
+  // 5️⃣ IMAGE + WISH
+  // ===============================
+
+  .to(".six", 1, { opacity: 1, y: 0 })
+
+  .staggerFrom(".wish-hbd span", 0.05, { opacity: 0 }, 0.03)
+  .from("#wishText", 1, { opacity: 0, y: 20 })
+
+  // Balloons
+  .to(".seven", 0.5, { opacity: 1 })
+  .from(".baloons img", 1.5, {
     opacity: 0,
-    y: -20,
-    rotationX: 5,
-    skewX: "10deg"
-  };
+    y: 1000,
+    stagger: 0.2
+  })
 
-  const ideaLeave = {
-    opacity: 0,
-    y: 20,
-    rotationY: 5,
-    skewX: "-10deg"
-  };
+  // ===============================
+  // 6️⃣ FINAL PAGE
+  // ===============================
 
-  const tl = new TimelineMax({ paused: true });
-
-  tl.set(".container", { visibility: "visible" });
-
-  // ==========================================
-  // SECTION 1 — INTRO LINES SEQUENTIAL
-  // ==========================================
-
-  tl.from(".one", 0.8, { opacity: 0, y: 20 })
-    .set(".line", { opacity: 0, y: 15 });
-
-  const lines = document.querySelectorAll(".line");
-
-  lines.forEach((line, index) => {
-    tl.to(line, 0.8, { opacity: 1, y: 0 });
-
-    if (index === lines.length - 1) {
-      tl.to(line, 0.8, { opacity: 0 }, "+=3");
-    } else {
-      tl.to(line, 0.8, { opacity: 0 }, "+=2");
-    }
-  });
-
-  tl.to(".one", 0.6, { opacity: 0, y: 20 });
-
-  // ==========================================
-  // SECTION 2 — VALENTINE SCREEN
-  // ==========================================
-
-  tl.from(".three", 0.8, { opacity: 0, scale: 0.9 })
-    .to(".three", 0.8, { opacity: 0, y: 20 }, "+=2");
-
-  // ==========================================
-  // SECTION 3 — MESSAGE BOX
-  // ==========================================
-
-  tl.from(".four", 0.7, { scale: 0.5, opacity: 0 })
-    .from(".fake-btn", 0.4, { scale: 0.5, opacity: 0 })
-    .staggerTo(".hbd-chatbox span", 0.04, { opacity: 1 }, 0.02)
-    .to(".fake-btn", 0.2, { backgroundColor: "rgb(127, 206, 248)" })
-    .to(".four", 0.6, { scale: 0.2, opacity: 0, y: -150 }, "+=1");
-
-  // ==========================================
-  // SECTION 4 — IDEAS
-  // ==========================================
-
-  tl.from(".idea-1", 0.7, ideaEnter)
-    .to(".idea-1", 0.7, ideaLeave, "+=1.5")
-
-    .from(".idea-2", 0.7, ideaEnter)
-    .to(".idea-2", 0.7, ideaLeave, "+=1.5")
-
-    .from(".idea-3", 0.7, ideaEnter)
-    .to(".idea-3", 0.7, ideaLeave, "+=1.5")
-
-    .from(".idea-4", 0.7, ideaEnter)
-    .to(".idea-4", 0.7, ideaLeave, "+=1.5")
-
-    .from(".idea-5", 0.7, ideaEnter)
-    .to(".idea-5", 0.7, ideaLeave, "+=1.5")
-
-    .from(".idea-6", 0.7, ideaEnter);
-
-  // ==========================================
-  // SECTION 5 — FINAL WISH
-  // ==========================================
-
-  tl.from(".six", 0.8, { opacity: 0, y: 30 })
-    .from(".wish-hbd span", 0.04, { opacity: 0 }, 0.02)
-    .from("#wishText", 0.7, { opacity: 0, y: 10 })
-
-    .from(".baloons img", 1.5, {
-      opacity: 0,
-      y: 1400,
-      stagger: 0.2
-    })
-
-    .from(".nine p", 1, ideaEnter)
-    .to(".last-smile", 0.5, { rotation: 90 }, "+=1");
-
-  tl.play();
+  .to(".nine", 1, { opacity: 1 })
+  .to(".last-smile", 0.6, { rotation: 90 }, "+=1");
 
   // Replay
-  const replayBtn = document.getElementById("replay");
-  if (replayBtn) {
-    replayBtn.addEventListener("click", () => tl.restart());
-  }
+  document.getElementById("replay").addEventListener("click", () => {
+    tl.restart();
+  });
 };
 
-// ==========================================
-// FETCH CUSTOMIZATION
-// ==========================================
 
-const fetchData = async () => {
-  try {
-    const response = await fetch("customize.json");
-    const data = await response.json();
+// ===============================
+// Start
+// ===============================
 
-    Object.keys(data).forEach((key) => {
-      if (data[key] !== "") {
-        if (key === "imagePath") {
-          document.getElementById(key)?.setAttribute("src", data[key]);
-        } else {
-          document.getElementById(key).innerText = data[key];
-        }
-      }
-    });
-  } catch (err) {
-    console.error("Customization load failed:", err);
-  }
-};
-
-// ==========================================
-// INIT
-// ==========================================
-
-window.addEventListener("DOMContentLoaded", async () => {
-  await fetchData();
+document.addEventListener("DOMContentLoaded", () => {
   animationTimeline();
 });
